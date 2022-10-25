@@ -10,6 +10,7 @@ Currently SAP does not allow us to provide the SAP Software for installing SAP N
 Hence you need to make sure you have the following information:
 
 SAP S-User and Password with the permission to download SAP Software from their software marketplace
+Please ask your SAP team to provide these for you
 
 If you do not have an S-User and the software is stored centrally at your company, you can also upload the
 software to the fileserver in this Directory. 
