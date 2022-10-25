@@ -1,7 +1,6 @@
 ---
- 
 - name: load fileserver
-  hosts: utility
+  hosts: localhost
   collections:
      - community.sap_launchpad
 
@@ -21,7 +20,7 @@
       default: "{{lookup('env', 'SAP_SUPPORT_DOWNLOAD_PASSWORD')}}"
 
   vars:
-      sap_swpm_software_path: /sap-software
+      sap_swpm_software_path: /export/sap-software
 
   vars_files: sap-dl.yml
 
@@ -49,28 +48,30 @@
          path: "{{ item }}"
          state: directory
          mode: '0755'
-         owner: student
       loop:
         - "{{ sap_swpm_software_path }}"
         - "{{ sap_swpm_software_path }}/HANA2SPS06"
-        - "{{ sap_swpm_software_path }}/S4HANA2021.FNDN"
+        - "{{ sap_swpm_software_path }}/S4HANA2022.FNDN"
       become: true
+      when: not dryrun
 
-    #- name: download Hana Media
-    #  community.sap_launchpad.software_center_download:
-    #    suser_id: "{{ suser_id }}"
-    #    suser_password: "{{ suser_password }}"
-    #    softwarecenter_search_query: "{{ item }}"
-    #    dest: "{{ sap_swpm_software_path }}/HANA2SPS06"
-    #    dry_run: "{{ dryrun }}"
-    #  loop: "{{ hdb2sps06 + sapcar }}"
+    - name: download Hana Media
+      community.sap_launchpad.software_center_download:
+        suser_id: "{{ suser_id }}"
+        suser_password: "{{ suser_password }}"
+        softwarecenter_search_query: "{{ item }}"
+        dest: "{{ sap_swpm_software_path }}/HANA2SPS06"
+        dry_run: "{{ dryrun }}"
+      loop: "{{ hdb2sps06 + sapcar }}"
+      ignore_errors: true
 
     - name: download S4 Media
       community.sap_launchpad.software_center_download:
         suser_id: "{{ suser_id }}"
         suser_password: "{{ suser_password }}"
         softwarecenter_search_query: "{{ item }}"
-        dest: "{{ sap_swpm_software_path }}/S4HANA2021.FNDN"
+        dest: "{{ sap_swpm_software_path }}/S4HANA2022.FNDN"
         dedup: "last"
         dry_run: "{{ dryrun }}"
-      loop: "{{ s4fndn2021 + sapcar + swpm }}"
+      loop: "{{ s4fndn2022 + sapcar + swpm }}"
+      ignore_errors: true
