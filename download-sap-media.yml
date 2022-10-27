@@ -1,6 +1,6 @@
 ---
 - name: load fileserver
-  hosts: localhost
+  hosts: utility
   collections:
      - community.sap_launchpad
 
