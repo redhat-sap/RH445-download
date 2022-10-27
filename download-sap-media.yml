@@ -76,7 +76,7 @@
         suser_id: "{{ suser_id }}"
         suser_password: "{{ suser_password }}"
         softwarecenter_search_query: "{{ item }}"
-        dest: "{{ sap_swpm_software_path }}/S4HANA2022.FNDN"
+        dest: "{{ sap_swpm_software_path }}/S4HANA2021.FNDN"
         dedup: "last"
         dry_run: "{{ dryrun|default(false) }}"
       loop: "{{ s4fndn2021 + swpm }}"
@@ -88,7 +88,7 @@
         dest: '{{ item }}'
         state: hard
       loop:
-        - '{{ sap_swpm_software_path }}/S4HANA2022.FNDN/{{ sapcar | first }}'
+        - '{{ sap_swpm_software_path }}/S4HANA2021.FNDN/{{ sapcar | first }}'
         - '{{ sap_swpm_software_path }}/HANA2SPS06/{{ sapcar | first }}'
     
    
