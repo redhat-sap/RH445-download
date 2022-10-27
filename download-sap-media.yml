@@ -83,7 +83,7 @@
       ignore_errors: true
 
     - name: Link SAPCAR
-      anible.builtin.file:
+      ansible.builtin.file:
         src: '{{ sap_swpm_software_path }}/{{ sapcar | first }}'
         dest: '{{ item }}'
         state: hard
