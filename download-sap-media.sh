@@ -39,7 +39,7 @@ echo ""
 echo "Press Ctrl-C to stop downloading with S-User and provide the software on your own"
 echo "or enter your SAP credentials with download permissions"
 echo ""
-ansible-galaxy collection install -r ./collections/requirements.yml
+ansible-galaxy collection install -r ./collections/requirements.yml 2>&1 > /dev/null
 ansible-playbook -v -i utility, \
                  -u devops \
                  download-sap-media.yml 
