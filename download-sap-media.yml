@@ -5,9 +5,6 @@
   collections:
      - community.sap_launchpad
 
-  vars:
-    - dryrun: false
-
   ### This playbook downloads all the SAP files required for installing
   ### SAP HANA and S/4 HANA from Maintenance Planner
   vars_prompt:
@@ -21,7 +18,7 @@
       default: "{{lookup('env', 'SAP_SUPPORT_DOWNLOAD_PASSWORD')}}"
 
   vars:
-      sap_swpm_software_path: /export/sap-software
+      sap_swpm_software_path: /sap-software
 
   vars_files: sap-dl.yml
 
@@ -53,8 +50,6 @@
         - "{{ sap_swpm_software_path }}"
         - "{{ sap_swpm_software_path }}/HANA2SPS06"
         - "{{ sap_swpm_software_path }}/S4HANA2022.FNDN"
-      become: true
-      when: not dryrun
 
     - name: download Hana Media
       community.sap_launchpad.software_center_download:
@@ -62,7 +57,7 @@
         suser_password: "{{ suser_password }}"
         softwarecenter_search_query: "{{ item }}"
         dest: "{{ sap_swpm_software_path }}/HANA2SPS06"
-        dry_run: "{{ dryrun }}"
+        dry_run: "{{ dryrun|default(false) }}"
       loop: "{{ hdb2sps06 + sapcar }}"
       ignore_errors: true
 
@@ -73,6 +68,6 @@
         softwarecenter_search_query: "{{ item }}"
         dest: "{{ sap_swpm_software_path }}/S4HANA2022.FNDN"
         dedup: "last"
-        dry_run: "{{ dryrun }}"
+        dry_run: "{{ dryrun|default(false) }}"
       loop: "{{ s4fndn2022 + sapcar + swpm }}"
       ignore_errors: true
