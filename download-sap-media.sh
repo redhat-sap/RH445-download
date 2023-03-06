@@ -33,7 +33,7 @@ echo ""
 echo "On server utility in directory /export/sap-software/S4HANA.FQDN"
 
 ## Parse current sap-dl.yml
-ansible -e @sap-dl.yml -m debug -a "msg='{{ s4fndn2022 + swpm + sapcar}}'" localhost  | egrep -v 'SUCCESS|msg|\]|\}'
+ansible -e @sap-dl.yml -m debug -a "msg='{{ s4fndn2021 + swpm + sapcar}}'" localhost  | egrep -v 'SUCCESS|msg|\]|\}'
 
 echo ""
 echo "Press Ctrl-C to stop downloading with S-User and provide the software on your own"

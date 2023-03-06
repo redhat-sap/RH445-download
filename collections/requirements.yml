@@ -2,5 +2,5 @@
 collections:
         # name: community.general
         # name: ansible.posix
-        - name: https://github.com/sap-linuxlab/community.sap_launchpad.git,add-dedup
+        - name: https://github.com/sap-linuxlab/community.sap_launchpad.git
           type: git
