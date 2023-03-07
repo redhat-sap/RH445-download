@@ -77,7 +77,7 @@
         suser_password: "{{ suser_password }}"
         softwarecenter_search_query: "{{ item }}"
         dest: "{{ sap_swpm_software_path }}/S4HANA2021.FNDN"
-        dedup: "last"
+        deduplicate: "last"
         dry_run: "{{ dryrun|default(false) }}"
       loop: "{{ s4fndn2021 + swpm }}"
       ignore_errors: true
