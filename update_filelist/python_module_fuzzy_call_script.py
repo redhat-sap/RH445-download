@@ -4,7 +4,7 @@ input_search_file=sys.argv[1]
 input_search_file_name_and_version_only=sys.argv[2]
 username=sys.argv[3]
 password=sys.argv[4]
-sys.path.append('/tmp/ansible_collection/ansible_collections/community/sap_launchpad/plugins')
+sys.path.append('/home/mkoch/.ansible/collections/ansible_collections/community/sap_launchpad/plugins')
 from module_utils.sap_launchpad_software_center_download_search_fuzzy import *
 sap_sso_login(username, password)
 query_result = search_software_fuzzy(input_search_file)
