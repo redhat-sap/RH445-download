@@ -6,14 +6,16 @@ cat << EOT
  Disclaimer
 ============
 
-Currently SAP does not allow us to provide the SAP Software for installing SAP Netweaver with you.
-Hence you need to make sure you have the following information:
+SAP does not allow us to provide the SAP Software for installing SAP S/4HANA Foundation with you.
+Hence you need to bring the installation binaries on your own.
 
-SAP S-User and Password with the permission to download SAP Software from their software marketplace
-Please ask your SAP team to provide these for you
+If you have an SAP S-User and oassword with the permission to download SAP Software from their software marketplace, 
+this script downloads the SAP software for you to the right location. Please ask your SAP team to provide an S-User with
+software download permission to you.
 
 If you do not have an S-User and the software is stored centrally at your company, you can also upload the
-software to the fileserver in this Directory. 
+software to the fileserver in this lab.
+
 For this course we need the following Software:
 
 - HANA 2 SPS 06 
