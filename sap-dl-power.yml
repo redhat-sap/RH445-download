@@ -19,7 +19,10 @@ s4fndn2022:
   - igsexe_1-70005446.sar
   - igshelper_17-10010245.sar
 swpm:
-  - SUM20SP18_10-80002470.SAR
+  - 
+ERROR. More than 1 result, manual intervention required....
+Identified SUM20SP18_10-80002470.SAR : Patch 10 for SOFTWARE UPDATE MANAGER 2.0 SP18, Support Package SOFTWARE UPDATE MANAGER 2.0 Linux on Power LE 64bit
+Identified SUM20SP19_0-80002470.SAR : Patch 0 for SOFTWARE UPDATE MANAGER 2.0 SP19, Support Package SOFTWARE UPDATE MANAGER 2.0 Linux on Power LE 64bit
   - SWPM20SP16_2-80003426.SAR
 sapcar:
   - SAPCAR_1115-70006238.EXE
