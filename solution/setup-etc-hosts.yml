@@ -1,0 +1,26 @@
+- name: Install S4 HANA HA mode
+  hosts: s4hanas
+  become: true
+  any_errors_fatal: true # https://docs.ansible.com/ansible/latest/user_guide/playbooks_error_handling.html#aborting-a-play-on-all-hosts
+  max_fail_percentage: 0
+  tasks:
+    - name: Add virtual IP addresses for ASCS and ERS
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
+      loop:
+        - "{{ s4hana_ha_ers_vip }}"
+        - "{{ s4hana_ha_ascs_vip }}"
+
+    - name: mount ASCS specific directories
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.posix.mount:
+        path: "{{ item }}"
+        src: "{{ _src_ }}"
+        fstype: "{{ _fstype_ }}"
+        state: mounted
+      loop:
+        - "{{ s4hana_ha_ascs_mount_path }}"
+
+    - name: mount ERS
