@@ -1,0 +1,66 @@
+### If the hostname setup is not configured correctly
+#   you need set sap_ip and sap_domain.
+#   we use the full qualified domain name in the inventory
+#   so we can generate these variables
+sap_hostname: "{{ inventory_hostname.split('.')[0] }}"
+sap_domain: "{{ inventory_hostname.split('.')[1:]| join('.') }}"
+
+### redhat.sap_install.sap_general_preconfigure
+sap_general_preconfigure_modify_etc_hosts: true
+sap_general_preconfigure_fail_if_reboot_required: false
+sap_general_preconfigure_update: true
+
+### redhat.sap_install.sap_hana_preconfigure
+sap_hana_preconfigure_update: true
+sap_hana_preconfigure_fail_if_reboot_required: false
+sap_hana_preconfigure_reboot_ok: true
+## BEGIN sap_hana_install parameters
+sap_hana_install_software_directory: /sap-software/HANA2SPS06
+sap_hana_install_software_extract_directory: /sap-hana-inst
+sap_hana_install_master_password: "R3dh4t$123"
+sap_hana_sid: "RHE"
+sap_hana_instance_number: "00"
+sap_hana_install_restrict_max_mem: 'y'
+sap_hana_install_max_mem: 38912
+## END sap_hana_install parameters
+## BEGIN sap_hana_hsr parameters
+sap_hana_cluster_nodes:
+  - node_name: hana1.lab.example.com
+    node_ip: "172.25.250.22"
+    node_role: primary
+    hana_site: DC01
+
+  - node_name: hana2.lab.example.com
+    node_ip: "172.25.250.23"
+    node_role: secondary
+    hana_site: DC02
+## END sap_hana_hsr parameters
+## BEGIN pacemaker parameters
+sap_ha_pacemaker_cluster_system_roles_collection: 'redhat.rhel_system_roles'
+ha_cluster_cluster_name: cluster1
+ha_cluster_hacluster_password: 'my_hacluster'
+
+sap_hana_vip:
+  primary: 172.25.250.80
+
+sap_ha_pacemaker_cluster_stonith_custom:
+  - name: "fence_hana1"
+    agent: "stonith:fence_ipmilan"
+    options:
+      ip: bmc-hana1
+      pcmk_host_list: hana1
+      power_timeout: 180
+      username: admin
+      password: password
+      lanplus: 1
+  - name: "fence_hana2"
+    agent: "stonith:fence_ipmilan"
+    options:
+      ip: bmc-hana2
+      pcmk_host_list: hana2
+      power_timeout: 180
+      username: admin
+      password: password
+      lanplus: 1
+## END pacemaker parameters
+

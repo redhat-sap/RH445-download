@@ -1,0 +1,14 @@
+# Virtual IP addresses
+sap_service_vips:
+    - node_ip: 172.25.250.80
+      node_name: hana
+      state: present
+      alias_mode: overwrite
+    - node_ip: 172.25.250.81
+      node_name: s4ascs
+      state: present
+      alias_mode: overwrite
+    - node_ip: 172.25.250.82
+      node_name: s4ers
+      state: present
+      alias_mode: overwrite

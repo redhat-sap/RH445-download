@@ -1,0 +1,8 @@
+---
+- name: "03-D HA Cluster deployment on a 2-node cluster"
+  hosts: hanas
+  become: true
+
+  roles:
+    - community.sap_install.sap_ha_pacemaker_cluster
+

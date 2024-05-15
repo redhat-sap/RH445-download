@@ -1,0 +1,10 @@
+- name: Update host aliases
+  hosts: localhost,all
+  become: true
+
+  tasks:
+    - name: Update Hostaliases
+      ansible.builtin.include_role:
+        name: community.sap_install.sap_maintain_etc_hosts
+      vars:
+        sap_maintain_etc_hosts_list: "{{ sap_service_vips }}"

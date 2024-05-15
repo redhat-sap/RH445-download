@@ -1,0 +1,29 @@
+- name: Step 3-B - Install SAP HANA
+  hosts: hanas
+  become: true
+
+  tasks:
+
+    - name: ensure software mountpoint exists
+      file:
+         path: "{{ sap_hana_install_software_directory }}"
+         state: directory
+         mode: '0755'
+
+    - name: Ensure SAP software directory is mounted
+      mount:
+        src: "utility:{{ sap_hana_install_software_directory }}"
+        path: "{{ sap_hana_install_software_directory }}"
+        opts: ro
+        boot: no
+        fstype: nfs
+        state: mounted
+
+    - name: execute the SAP Hana Installation
+      include_role:
+        name: redhat.sap_install.sap_hana_install
+
+    - name: Ensure SAP software directory is unmounted
+      mount:
+        path: "{{ sap_hana_install_software_directory }}"
+        state: unmounted

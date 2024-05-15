@@ -1,0 +1,110 @@
+---
+# Ansible Playbook for SAP S/4HANA Distributed HA installation
+
+# Use include_role / include_tasks inside Ansible Task block, instead of using roles declaration or Task block with import_roles.
+# This ensures Ansible Roles, and the tasks within, will be parsed in sequence instead of parsing at Playbook initialisation.
+
+## Temporary IP and FS setup for ASCS and ERS
+- name: Add temporary IP to ASCS and mount directories
+  hosts: s4ascs
+  become: true
+  any_errors_fatal: true
+  max_fail_percentage: 0
+  vars:
+    ip_cidr_prefix: 24
+  tasks:
+    - name: Add ASCS service ip temporary
+      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ascs_ip_address }}/{{ ip_cidr_prefix }} brd + dev eth0'
+      register: __ipstate
+      changed_when: __ipstate.rc == 0
+      failed_when: __ipstate.rc != 0 and __ipstate.rc != 2
+
+    - name: Ensure ASCS directory exists
+      ansible.builtin.file:
+        path: "/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }}"
+        state: directory
+        mode: '0755'
+
+    - name: Mount ASCS filesystem via nfs
+      ansible.posix.mount:
+        path: "/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }}"
+        src: "{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }}"
+        fstype: nfs
+        state: mounted
+     
+    - name: Remove fstab entry for ASCS mount
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        state: absent
+        regexp: '^{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }} .*$'
+
+- name: Add temporary IP to ERS and mount directories
+  hosts: s4ers
+  become: true
+  any_errors_fatal: true
+  max_fail_percentage: 0
+  vars:
+    ip_cidr_prefix: 24
+
+  tasks:
+    - name: Add ERS service ip temporary
+      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ers_ip_address }}/{{ ip_cidr_prefix }} brd + dev eth0'
+      register: __ipstate
+      changed_when: __ipstate.rc == 0
+      failed_when: __ipstate.rc != 0 and __ipstate.rc != 2
+
+
+    - name: Ensure ERS directory exists
+      ansible.builtin.file:
+        path: "/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }}"
+        state: directory
+        mode: '0755'
+
+    - name: Mount ERS filesystem via nfs
+      ansible.posix.mount:
+        path: "/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }}"
+        src: "{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }}"
+        fstype: nfs
+        state: mounted
+
+    - name: Remove fstab entry for ERS mount
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        state: absent
+        regexp: '^{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }} .*$'
+
+#### VM storage filesystem setup ####
+- name: Hosts shared storage setup
+  hosts: s4hanas
+  become: true
+  any_errors_fatal: true
+  max_fail_percentage: 0
+  vars:
+    shared_paths:
+      - /usr/sap/{{ sap_swpm_sid }}/SYS
+      - /usr/sap/trans
+      - /sapmnt
+  tasks:
+    - name: Ensure mountpoints for shared paths exist
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: "{{ shared_paths |flatten(levels=1) }}"
+
+    - name: Ensure filesystems for shared paths are mounted
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.posix.mount:
+        path: "{{ item }}"
+        src: "{{ sap_nwas_shared_mount + item }}"
+        fstype: nfs
+        state: mounted
+      loop: "{{ shared_paths |flatten(levels=1) }}"
+
+    - name: Install rsync
+      ansible.builtin.package:
+        name:
+          - rsync
+        state: present
+

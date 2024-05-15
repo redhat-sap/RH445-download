@@ -1,0 +1,15 @@
+---
+- name: Phase 3A - prepare for SAP HANA installation
+  hosts: hanas
+  become: true
+
+  roles:
+     - redhat.sap_install.sap_general_preconfigure
+     - redhat.sap_install.sap_hana_preconfigure
+
+- name: Phase 4A - prepare for SAP Netweaver installation
+  hosts: s4hanas
+  become: true
+  roles:
+     - redhat.sap_install.sap_general_preconfigure
+     - redhat.sap_install.sap_netweaver_preconfigure
