@@ -10,4 +10,4 @@ EOT
 echo -n "Press Ctrl-C to stop or Enter to continue"
 read ask
 
-ansible-playbook -v -K -i localhost,utiliy update-lab.yml
+ansible-playbook -v -K -i localhost,utility update-lab.yml
