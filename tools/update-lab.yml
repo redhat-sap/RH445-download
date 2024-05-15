@@ -1,0 +1,58 @@
+---
+- name: Update Lab Content
+  hosts: localhost
+  become: true
+  
+  vars:
+    labscriptroot: /home/student/.venv/labs/lib/python3.6/site-packages/rh445/ansible
+
+  tasks:
+  - name: Ensure version 1.4.0 of community sap install is used
+    ansible.builtin.lineinfile:
+      path: '{{ labscriptroot + "/collections/requirements.yml" }}'
+      regexp: '^          version: 1\.2\.3'
+      insertafter: '^        - name: community.sap_install'
+      line: '          version: 1.4.0'
+  
+  - name: Ensure ansible utils is installed
+    ansible.builtin.lineinfile:
+      path: '{{ labscriptroot + "/collections/requirements.yml" }}'
+      regexp: '^        - name: ansible.utils'
+      line: '        - name: ansible.utils'
+      
+- name: Create fileshares
+  hosts: utility
+  become: true
+  
+  vars:
+    pathlist:
+      - /sapmnt
+      - /usr/sap/trans
+      - /usr/sap/RHE/sys
+      - /usr/sap/RHE/ASCS01
+      - /usr/sap/RHE/ERS02
+      - /usr/sap/RHE/D10
+      - /usr/sap/RHE/D20
+      - /usr/sap/RHE/D21
+      - /usr/sap/RHE/D22
+    nfsroot: /sap-software/mounts
+  
+  tasks:
+    - name: Create nfsroot directory
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.file:
+        path: "{{ nfsroot }}"
+        state: directory
+        mode: '0777'
+
+    - name: Create directories on NFS Server
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.file:
+        path: "{{ nfsroot + item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0777'
+      loop: "{{ pathlist |flatten(levels=1) }}"
+
+      
