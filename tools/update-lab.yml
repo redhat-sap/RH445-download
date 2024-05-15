@@ -9,15 +9,16 @@
   tasks:
   - name: Ensure version 1.4.0 of community sap install is used
     ansible.builtin.lineinfile:
-      path: '{{ labscriptroot + "/collections/requirements.yml" }}'
-      regexp: '^          version: 1\.2\.3'
-      insertafter: '^        - name: community.sap_install'
-      line: '          version: 1.4.0'
+      path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
+      regexp: '^ *version: 1\.2\.3'
+      insertafter: '^ *- name: community.sap_install'
+      line: '                      version: 1.4.0'
   
   - name: Ensure ansible utils is installed
     ansible.builtin.lineinfile:
-      path: '{{ labscriptroot + "/collections/requirements.yml" }}'
-      regexp: '^        - name: ansible.utils'
+      path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
+      regexp: '^ *- name: ansible.utils'
+      insertafter: '^            collections:'
       line: '        - name: ansible.utils'
       
 - name: Create fileshares
