@@ -19,7 +19,7 @@
       path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
       regexp: '^ *- name: ansible.utils'
       insertafter: '^            collections:'
-      line: '                   - name: ansible.utils'
+      line: '                    - name: ansible.utils'
       
 - name: Create fileshares
   hosts: utility
