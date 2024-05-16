@@ -1,0 +1,71 @@
+- name: Configure High Availability using ABAP Central Services (ASCS) and Enqueue Replication Service (ERS) with Standalone Enqueue Server 2 (ENSA2)
+  hosts: s4ers,s4a
+  become: true
+  any_errors_fatal: true
+  max_fail_percentage: 0
+  tasks:
+    # Execute setup of SAP NetWeaver ASCS/ERS HA cluster
+    # -- Linux Pacemaker cluster preparation
+    # -- Linux Pacemaker basic cluster configuration, 2 nodes
+    # -- SAP NetWeaver ASCS/ERS HA configuration, with a Virtual IP (VIP)
+    # -- Fencing Agent/s setup for Infrastructure: fence_aws
+    # -- Resource Agent/s setup for Infrastructure: aws-vpc-move-ip
+    # -- Resource Agent/s setup for SAP: Filesystem, SAPInstance
+    # -- SAP NetWeaver ASCS host:
+    # ----> Filesystem for /sapmnt
+    # ----> Filesystem for /usr/sap/trans
+    # ----> Filesystem for /usr/sap/{{ sap_system_id }}/SYS
+    # ----> Filesystem for /sapmnt
+    # ----> Filesystem for /usr/sap/{{ sap_system_id }}/ASCS{{ sap_system_nwas_abap_ascs_instance_nr }}
+    # ----> SAPInstance for /sapmnt/{{ sap_system_sid }}/profile/{{ sap_system_sid }}_ASCS{{ sap_system_nwas_abap_ascs_instance_nr }}
+    # -- SAP NetWeaver ERS host:
+    # ----> Filesystem for /usr/sap/{{ sap_system_id }}/ERS{{ sap_system_nwas_abap_ers_instance_nr }}
+    # ----> SAPInstance for /sapmnt/{{ sap_system_sid }}/profile/{{ sap_system_sid }}_ERS{{ sap_system_nwas_abap_ers_instance_nr }}
+
+    - name: Execute Ansible Role sap_ha_pacemaker_cluster
+      ansible.builtin.include_role:
+        name: community.sap_install.sap_ha_pacemaker_cluster
+      vars:
+        ha_cluster_cluster_name: clusternwasascs
+        ha_cluster_hacluster_password: 'clusterpass'
+        ha_cluster:
+          node_name: "{{ ansible_hostname }}"
+          pcs_address: "{{ ansible_default_ipv4.address }}"
+        sap_ha_pacemaker_cluster_create_config_varfile: false
+        sap_ha_pacemaker_cluster_host_type:
+          - nwas_abap_ascs_ers
+        sap_ha_pacemaker_cluster_vip_resource_group_name: vipnwasascs
+        # Underlying filesystems are derived from the parent "/usr/sap" definition.
+        ### sap_ha_pacemaker_cluster_storage_definition: 
+          - name: usr_sap
+            mountpoint: /usr/sap
+            nfs_path: /usr/sap
+            nfs_server: "{{ sap_storage_nfs_server }}"
+
+          - name: usr_sap_trans
+            mountpoint: /usr/sap/trans
+            nfs_path: /usr/sap/trans
+            nfs_server: "{{ sap_storage_nfs_server }}"
+
+          - name: sapmnt
+            mountpoint: /sapmnt
+            nfs_path: /sapmnt
+            nfs_server: "{{ sap_storage_nfs_server }}"
+
+        sap_ha_pacemaker_cluster_storage_nfs_filesytem_type: nfs4
+        sap_ha_pacemaker_cluster_storage_nfs_mount_options: defaults,hard,acl
+        sap_ha_pacemaker_cluster_storage_nfs_server: "{{ sap_storage_nfs_server | default('') }}"
+
+        # SID and Instance Numbers for ASCS and ERS.
+        sap_ha_pacemaker_cluster_nwas_abap_sid: "{{ sap_swpm_sid }}"
+        sap_ha_pacemaker_cluster_nwas_abap_ascs_instance_nr: "{{ sap_swpm_ascs_instance_nr }}"
+        sap_ha_pacemaker_cluster_nwas_abap_ers_instance_nr: "{{ sap_swpm_ers_instance_nr }}"
+
+        # ASCS Profile name created by the installer, for example: <SID>_ASCS<Instance-Number>_<ASCS-virtual-node-name>
+        sap_ha_pacemaker_cluster_nwas_abap_ascs_sapinstance_instance_name: "{{ sap_swpm_sid }}_ASCS{{ sap_swpm_ascs_instance_nr }}"
+        sap_ha_pacemaker_cluster_nwas_abap_ascs_sapinstance_start_profile_string: "/sapmnt/{{ sap_swpm_sid }}/profile/{{ sap_swpm_sid }}_ASCS{{ sap_swpm_ascs_instance_nr }}_{{ sap_swpm_ascs_instance_hostname }}"
+
+        # ERS Profile name created by the installer, for example: <SID>_ERS<Instance-Number>_<ERS-virtual-node-name>
+        sap_ha_pacemaker_cluster_nwas_abap_ers_sapinstance_instance_name: "{{ sap_swpm_sid }}_ERS{{ sap_swpm_ers_instance_nr }}"
+        sap_ha_pacemaker_cluster_nwas_abap_ers_sapinstance_start_profile_string: "/sapmnt/{{ sap_swpm_sid }}/profile/{{ sap_swpm_sid }}_ERS{{ sap_swpm_ers_instance_nr }}_{{ sap_swpm_ers_instance_hostname }}"
+

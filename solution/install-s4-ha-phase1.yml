@@ -23,7 +23,9 @@
       ansible.builtin.file:
         path: "/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }}"
         state: directory
-        mode: '0755'
+        owner: "{{ sap_swpm_sidadm_uid | d('root') }}"
+        group: "{{ sap_swpm_sapsys_gid | d('root') }}" 
+        mode: '0775'
 
     - name: Mount ASCS filesystem via nfs
       ansible.posix.mount:
@@ -58,7 +60,9 @@
       ansible.builtin.file:
         path: "/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }}"
         state: directory
-        mode: '0755'
+        owner: "{{ sap_swpm_sidadm_uid | d('root') }}"
+        group: "{{ sap_swpm_sapsys_gid | d('root') }}" 
+        mode: '0775'
 
     - name: Mount ERS filesystem via nfs
       ansible.posix.mount:
@@ -90,7 +94,9 @@
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
-        mode: '0755'
+        owner: "{{ sap_swpm_sidadm_uid | d('root') }}"
+        group: "{{ sap_swpm_sapsys_gid | d('root') }}" 
+        mode: '0775'
       loop: "{{ shared_paths |flatten(levels=1) }}"
 
     - name: Ensure filesystems for shared paths are mounted

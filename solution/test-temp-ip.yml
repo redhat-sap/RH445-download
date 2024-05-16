@@ -1,0 +1,38 @@
+- name: Add a temporary IP
+  hosts: nodea.lab.example.com
+  become: true
+  vars: 
+    sap_vm_temp_vip_nwas_abap_ascs: 172.25.250.81
+    ip_cidr_prefix: 24
+
+
+  tasks:
+    - name: Add temp ip
+      command:  ip address add {{ sap_vm_temp_vip_nwas_abap_ascs }}/{{ ip_cidr_prefix }} brd + dev eth0
+
+    #- name: Add temporary ip
+    #  include_role:
+    #    name: redhat.rhel_system_roles.network
+    #  vars:
+    #    network_provider: nm
+    #    network_state:
+    #      interfaces:
+    #        - name: eth0
+    #          type: ethernet
+    #          state: up
+    #          ipv4:
+    #            enabled: true
+    #            address:
+    #              - ip: 172.25.250.81
+    #                prefix-length: 24
+    #              - ip: 172.25.250.10
+    #                prefix-length: 24
+        # network_connections:
+         #  - name: tempip
+          #   interface_name: eth0
+          #   state: up
+          #   type: ethernet
+          #   #persistent_state: absent
+          #   ip:
+          #     address:
+          #       - 172.25.250.10/24

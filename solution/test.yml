@@ -1,0 +1,22 @@
+- name: Create fileshares
+  hosts: utility
+  become: true
+  
+  vars:
+    pathlist:
+      - /sapmnt
+      - /usr/sap/trans
+      - /usr/sap/RHE/sys
+      - /usr/sap/RHE/ASCS01
+      - /usr/sap/RHE/ERS02
+      - /usr/sap/RHE/D10
+      - /usr/sap/RHE/D20
+      - /usr/sap/RHE/D21
+      - /usr/sap/RHE/D22/
+  
+  tasks:
+    - name: Debug pathlist
+      # Content suggestion provided by Ansible Lightspeed
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      loop: "{{ pathlist |flatten(levels=1) }}"

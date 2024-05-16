@@ -1,0 +1,30 @@
+---
+- name: Install S4
+  hosts: nodea.lab.example.com
+  become: true
+
+  tasks:
+    - name: ensure software mountpoint exists
+      file:
+         path: "{{ sap_swpm_software_path }}"
+         state: directory
+         mode: '0755'
+
+    - name: Ensure SAP software directory is mounted
+      mount:
+        src: "utility:{{ sap_swpm_software_path }}"
+        path: "{{ sap_swpm_software_path }}"
+        opts: rw
+        boot: no
+        fstype: nfs
+        state: mounted
+
+    - name: execute the SWPM Installation
+      include_role:
+        name: community.sap_install.sap_swpm
+
+    - name: Ensure SAP software directory is unmounted
+      mount:
+        path: "{{ sap_swpm_software_path }}"
+        state: unmounted
+
