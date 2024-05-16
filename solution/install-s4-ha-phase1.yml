@@ -14,7 +14,7 @@
     ip_cidr_prefix: 24
   tasks:
     - name: Add ASCS service ip temporary
-      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ascs_ip_address }}/{{ ip_cidr_prefix }} brd + dev eth0'
+      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ascs_ip_address }}/{{ ip_cidr_prefix }} brd + dev {{ sap_ha_pacemaker_cluster_vip_client_interface }}'
       register: __ipstate
       changed_when: __ipstate.rc == 0
       failed_when: __ipstate.rc != 0 and __ipstate.rc != 2
@@ -50,7 +50,7 @@
 
   tasks:
     - name: Add ERS service ip temporary
-      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ers_ip_address }}/{{ ip_cidr_prefix }} brd + dev eth0'
+      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ers_ip_address }}/{{ ip_cidr_prefix }} brd + dev {{ sap_ha_pacemaker_cluster_vip_client_interface }}'
       register: __ipstate
       changed_when: __ipstate.rc == 0
       failed_when: __ipstate.rc != 0 and __ipstate.rc != 2

@@ -1,5 +1,5 @@
 - name: Configure High Availability using ABAP Central Services (ASCS) and Enqueue Replication Service (ERS) with Standalone Enqueue Server 2 (ENSA2)
-  hosts: s4ers,s4a
+  hosts: s4ers,s4ascs
   become: true
   any_errors_fatal: true
   max_fail_percentage: 0
@@ -26,6 +26,7 @@
       ansible.builtin.include_role:
         name: community.sap_install.sap_ha_pacemaker_cluster
       vars:
+        sap_ha_pacemaker_cluster_system_roles_collection: redhat.rhel_system_roles
         ha_cluster_cluster_name: clusternwasascs
         ha_cluster_hacluster_password: 'clusterpass'
         ha_cluster:
@@ -36,7 +37,7 @@
           - nwas_abap_ascs_ers
         sap_ha_pacemaker_cluster_vip_resource_group_name: vipnwasascs
         # Underlying filesystems are derived from the parent "/usr/sap" definition.
-        sap_ha_pacemaker_cluster_storage_definition:
+        sap_ha_pacemaker_cluster_storage_definition: 
           - name: usr_sap
             mountpoint: /usr/sap
             nfs_path: /usr/sap

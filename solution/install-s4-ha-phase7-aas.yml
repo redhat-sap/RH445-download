@@ -1,0 +1,33 @@
+- name:  Ansible Play for SAP NetWeaver AAS
+  hosts: s4aas
+  become: true
+  any_errors_fatal: true
+  max_fail_percentage: 0
+  tasks:
+    - name: ensure software mountpoint exists
+      ansible.builtin.file:
+         path: "{{ sap_swpm_software_path }}"
+         state: directory
+         mode: '0755'
+
+    - name: Ensure SAP software directory is mounted
+      ansible.posix.mount:
+        src: "utility:{{ sap_swpm_software_path }}"
+        path: "{{ sap_swpm_software_path }}"
+        opts: rw
+        boot: no
+        fstype: nfs
+        state: mounted
+
+    - name: Execute Ansible Role sap_swpm
+      ansible.builtin.include_role:
+        name: community.sap_install.sap_swpm
+      vars:
+        sap_swpm_templates_product_input: "sap_s4hana_2021_distributed_nwas_aas"
+        sap_swpm_virtual_hostname: "{{ sap_swpm_aas_instance_hostname }}"
+
+    - name: Ensure SAP software directory is unmounted
+      mount:
+        path: "{{ sap_swpm_software_path }}"
+        state: unmounted
+
