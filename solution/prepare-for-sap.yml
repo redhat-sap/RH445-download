@@ -4,12 +4,12 @@
   become: true
 
   roles:
-     - redhat.sap_install.sap_general_preconfigure
-     - redhat.sap_install.sap_hana_preconfigure
+     - community.sap_install.sap_general_preconfigure
+     - community.sap_install.sap_hana_preconfigure
 
 - name: Phase 4A - prepare for SAP Netweaver installation
   hosts: s4hanas
   become: true
   roles:
-     - redhat.sap_install.sap_general_preconfigure
-     - redhat.sap_install.sap_netweaver_preconfigure
+     - community.sap_install.sap_general_preconfigure
+     - community.sap_install.sap_netweaver_preconfigure

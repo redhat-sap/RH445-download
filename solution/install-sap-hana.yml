@@ -21,7 +21,7 @@
 
     - name: execute the SAP Hana Installation
       include_role:
-        name: redhat.sap_install.sap_hana_install
+        name: community.sap_install.sap_hana_install
 
     - name: Ensure SAP software directory is unmounted
       mount:

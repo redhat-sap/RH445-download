@@ -24,7 +24,7 @@
 
     - name: Execute Ansible Role sap_ha_pacemaker_cluster
       ansible.builtin.include_role:
-        name: community.sap_install.sap_ha_pacemaker_cluster
+      o  name: community.sap_install.sap_ha_pacemaker_cluster
       vars:
         sap_ha_pacemaker_cluster_system_roles_collection: redhat.rhel_system_roles
         ha_cluster_cluster_name: clusternwasascs
