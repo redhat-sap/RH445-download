@@ -3,24 +3,43 @@
   hosts: localhost
   become: true
   
+  vars_prompt:
+    - name: "activationKey"
+      prompt: "Activation Key"
+      private: false
+    - name: "nick"
+      prompt: "Enter a Nickname"
+      private: false
+
   vars:
     labscriptroot: /home/student/.venv/labs/lib/python3.6/site-packages/rh445/ansible
 
   tasks:
-  - name: Ensure version 1.4.0 of community sap install is used
-    ansible.builtin.lineinfile:
-      path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
-      regexp: '^ *version: 1\.2\.3'
-      insertafter: '^ *- name: community.sap_install'
-      line: '                      version: 1.4.0'
-  
-  - name: Ensure ansible utils is installed
-    ansible.builtin.lineinfile:
-      path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
-      regexp: '^ *- name: ansible.utils'
-      insertafter: '^            collections:'
-      line: '                    - name: ansible.utils'
+    - name: Ensure version 1.4.0 of community sap install is used
+      ansible.builtin.lineinfile:
+        path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
+        regexp: '^ *version: 1\.2\.3'
+        insertafter: '^ *- name: community.sap_install'
+        line: '                      version: 1.4.0'
+
+    - name: Ensure ansible utils is installed
+      ansible.builtin.lineinfile:
+        path: '{{ labscriptroot + "/ansible-labcheck/finish.yml" }}'
+        regexp: '^ *- name: ansible.utils'
+        insertafter: '^            collections:'
+        line: '                    - name: ansible.utils'
+
+    - name: Register RHEL System with activationkey and orgid
+      ansible.builtin.command: subscription-manager register --org 6169558 --activationkey {{ activationKey }} --name lab-{{ nick }}
+      ignore_errors: true
       
+    - name: update ansible related packages
+      ansible.builtin.dnf:
+        name:
+          - ansible-core
+          - rhel-system-roles
+        state: latest
+
 - name: Create fileshares
   hosts: utility
   become: true

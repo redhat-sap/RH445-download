@@ -36,7 +36,7 @@
           - nwas_abap_ascs_ers
         sap_ha_pacemaker_cluster_vip_resource_group_name: vipnwasascs
         # Underlying filesystems are derived from the parent "/usr/sap" definition.
-        ### sap_ha_pacemaker_cluster_storage_definition: 
+        sap_ha_pacemaker_cluster_storage_definition:
           - name: usr_sap
             mountpoint: /usr/sap
             nfs_path: /usr/sap
