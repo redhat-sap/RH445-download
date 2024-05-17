@@ -29,8 +29,11 @@
         insertafter: '^            collections:'
         line: '                    - name: ansible.utils'
 
-    - name: Register RHEL System with activationkey and orgid # noqa: ignore-errors no-changed-when
+    - name: Register RHEL System with activationkey and orgid
       ansible.builtin.command: subscription-manager register --org 6169558 --activationkey {{ activationKey }} --name lab-{{ nick }}
+      register: reg
+      changed_when: reg.rc == 0
+      failed_when: false
       ignore_errors: true
 
     - name: Add new lab alias to bashrc
