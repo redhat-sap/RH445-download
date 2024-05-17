@@ -1,4 +1,4 @@
-- name:  Ansible Play for SAP NetWeaver AAS
+- name:  Installation of SAP NetWeaver Additional Application Server (AAS)
   hosts: s4aas
   become: true
   any_errors_fatal: true

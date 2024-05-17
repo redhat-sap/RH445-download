@@ -1,5 +1,5 @@
 ---
-- name: Install S4
+- name: Install standalone S4HANA
   hosts: nodea.lab.example.com
   become: true
 

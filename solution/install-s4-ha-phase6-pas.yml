@@ -1,4 +1,4 @@
-- name:  Ansible Play for SAP NetWeaver Application Server - Installation Export Database Load from the Primary Application Server (PAS)
+- name:  Installation of SAP Netweaver Primary Application Server (PAS)
   hosts: s4pas
   become: true
   any_errors_fatal: true

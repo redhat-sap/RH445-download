@@ -38,7 +38,7 @@ sap_swpm_db_host: "hana"
 # However we are not using the PAS or AAS in a High Availability setup, only the Database and ASCS/ERS are.
 # Therefore, override the virtual hostname with the local hostname.
 sap_swpm_pas_instance_hostname: "nodec"
-sap_swpm_aas_instance_hostname: "nodeb"
+sap_swpm_aas_instance_hostname: "noded"
 
 ####
 # Mandatory parameters : Virtual IPs (VIPs)

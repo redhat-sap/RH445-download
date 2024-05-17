@@ -1,9 +1,11 @@
 ---
 # Ansible Playbook for SAP S/4HANA Distributed HA installation
 
-# Use include_role / include_tasks inside Ansible Task block, instead of using roles declaration or Task block with import_roles.
-# This ensures Ansible Roles, and the tasks within, will be parsed in sequence instead of parsing at Playbook initialisation.
+# Use include_role / include_tasks inside Ansible Task block, instead of using roles
+# declaration or Task block with import_roles. This ensures Ansible Roles,  and the
+# tasks within, will be parsed in sequence instead of parsing at Playbook initialisation.
 
+## This play prepares the distributed environment and does all the required NFS mounts
 ## Temporary IP and FS setup for ASCS and ERS
 - name: Add temporary IP to ASCS and mount directories
   hosts: s4ascs

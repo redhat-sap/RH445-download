@@ -2,7 +2,7 @@
 - name: Update Lab Content
   hosts: localhost
   become: true
-  
+
   vars_prompt:
     - name: "activationKey"
       prompt: "Activation Key"
@@ -29,21 +29,19 @@
         insertafter: '^            collections:'
         line: '                    - name: ansible.utils'
 
-    - name: Register RHEL System with activationkey and orgid
+    - name: Register RHEL System with activationkey and orgid # noqa: ignore-errors no-changed-when
       ansible.builtin.command: subscription-manager register --org 6169558 --activationkey {{ activationKey }} --name lab-{{ nick }}
       ignore_errors: true
-      
-    - name: update ansible related packages
-      ansible.builtin.dnf:
-        name:
-          - ansible-core
-          - rhel-system-roles
-        state: latest
+
+    - name: Add new lab alias to bashrc
+      ansible.builtin.lineinfile:
+        path: /home/student/.bashrc
+        regexp: '^alias lab='
+        line: alias lab='. ~/.venv/bin/activate; ~/.venv/bin/lab $1 $2; deactivate'
 
 - name: Create fileshares
   hosts: utility
   become: true
-  
   vars:
     pathlist:
       - /sapmnt
@@ -51,12 +49,11 @@
       - /usr/sap/RHE/SYS
       - /usr/sap/RHE/ASCS01
       - /usr/sap/RHE/ERS02
-      - /usr/sap/RHE/D10
-      - /usr/sap/RHE/D20
-      - /usr/sap/RHE/D21
-      - /usr/sap/RHE/D22
+      # /usr/sap/RHE/D10
+      # /usr/sap/RHE/D20
+      # /usr/sap/RHE/D21
+      # /usr/sap/RHE/D22
     nfsroot: /sap-software/mounts
-  
   tasks:
     - name: Create nfsroot directory
       # Content suggestion provided by Ansible Lightspeed
@@ -73,6 +70,15 @@
         owner: root
         group: root
         mode: '0777'
-      loop: "{{ pathlist |flatten(levels=1) }}"
+      loop: "{{ pathlist | flatten(levels=1) }}"
 
-      
+- name: Update ansible-core
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Update ansible related packages # noqa: package-latest
+      ansible.builtin.dnf:
+        name:
+          - ansible-core
+          - rhel-system-roles
+        state: latest

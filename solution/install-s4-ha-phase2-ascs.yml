@@ -1,4 +1,4 @@
-- name: Ansible Play for SAP NetWeaver Application Server installation - ABAP Central Services (ASCS) for HA
+- name: SAP NetWeaver Application Server installation - ABAP Central Services (ASCS) for HA
   hosts: s4ascs
   become: true
   any_errors_fatal: true
