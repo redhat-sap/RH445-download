@@ -36,8 +36,8 @@
     - name: Add new lab alias to bashrc
       ansible.builtin.lineinfile:
         path: /home/student/.bashrc
-        regexp: '^alias lab='
-        line: alias lab='. ~/.venv/labs/bin/activate; ~/.venv/labs/bin/lab $1 $2; deactivate'
+        regexp: '^function lab()'
+        line: 'function lab() { source ~/.venv/labs/bin/activate; ~/.venv/labs/bin/lab $1 $2; deactivate; }'
 
 - name: Create fileshares
   hosts: utility
