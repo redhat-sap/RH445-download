@@ -33,8 +33,7 @@
       ansible.builtin.command: subscription-manager register --org 6169558 --activationkey {{ activationKey }} --name lab-{{ nick }}
       register: reg
       changed_when: reg.rc == 0
-      failed_when: false
-      ignore_errors: true
+      failed_when: reg.rc != 64 and reg.rc != 0
 
     - name: Add new lab alias to bashrc
       ansible.builtin.lineinfile:
