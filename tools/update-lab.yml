@@ -74,6 +74,9 @@
         mode: '0777'
       loop: "{{ pathlist | flatten(levels=1) }}"
 
+# Ansible must be updated as a last action in the last play
+# otherwise the playbook fails
+
 - name: Update ansible-core
   hosts: localhost
   become: true
