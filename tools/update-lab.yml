@@ -37,7 +37,7 @@
       ansible.builtin.lineinfile:
         path: /home/student/.bashrc
         regexp: '^alias lab='
-        line: alias lab='. ~/.venv/bin/activate; ~/.venv/bin/lab $1 $2; deactivate'
+        line: alias lab='. ~/.venv/labs/bin/activate; ~/.venv/labs/bin/lab $1 $2; deactivate'
 
 - name: Create fileshares
   hosts: utility
