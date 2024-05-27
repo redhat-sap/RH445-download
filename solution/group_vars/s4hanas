@@ -10,9 +10,11 @@ sap_general_preconfigure_modify_etc_hosts: true
 sap_general_preconfigure_update: true
 sap_general_preconfigure_fail_if_reboot_required: false
 sap_general_preconfigure_reboot_ok: true
+sap_general_preconfigure_system_roles_collection: 'redhat.rhel_system_roles'
 
 ### redhat.sap_install.sap_netweaver_preconfigure
-sap_netweaver_preconfigure_fail_if_not_enough_swap_space_configured: false
+sap_netweaver_preconfigure_fail_if_not_enough_swap_space_configured: false 
+sap_netweaver_preconfigure_system_roles_collection: 'redhat.rhel_system_roles'
 
 ## Info for S4HANA HA
 
