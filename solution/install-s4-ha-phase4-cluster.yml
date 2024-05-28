@@ -42,17 +42,17 @@
           - name: usr_sap
             mountpoint: /usr/sap
             nfs_path: /sap-software/mounts/usr/sap
-            nfs_server: "{{ sap_storage_nfs_server }}"
+            nfs_server: "{{ sap_storage_nfs_server }}:"
 
          # - name: usr_sap_trans
          #   mountpoint: /usr/sap/trans
          #   nfs_path: /sap-software/mounts/usr/sap/trans
-         #   nfs_server: "{{ sap_storage_nfs_server }}"
+         #   nfs_server: "{{ sap_storage_nfs_server }}:"
 
          # - name: sapmnt
          #   mountpoint: /sapmnt
          #   nfs_path: /sap-software/mounts/sapmnt
-         #   nfs_server: "{{ sap_storage_nfs_server }}"
+         #   nfs_server: "{{ sap_storage_nfs_server }}:"
 
         sap_ha_pacemaker_cluster_storage_nfs_filesytem_type: nfs4
         sap_ha_pacemaker_cluster_storage_nfs_mount_options: defaults,hard,acl
