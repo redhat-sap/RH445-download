@@ -1,0 +1,32 @@
+---
+- name: Configure Pacemaker Alerts
+  hosts: hana
+  become: yes
+  tasks:
+    - name: Install alert file
+      copy:
+        src: /usr/share/pacemaker/alerts/alert_file.sh.sample
+        dest: /var/lib/pacemaker/alert_file.sh
+        mode: '0755'
+    - name: Create logging file
+      file:
+        path: /var/log/pcmk_alert_file.log
+        state: touch
+        owner: hacluster
+        group: haclient
+        mode: '0600'
+    - name: Check PCS cluster state
+      command: pcs cluster check
+      register: pcs_check
+      failed_when: "'error' in pcs_check.stderr"
+    
+    - name: Configure PCS alert
+      block:
+        - name: Create alert
+          command: pcs alert create id=alert_file description="Log events to a file." path=/var/lib/pacemaker/alert_file.sh meta timeout=15s
+        - name: Add recipient to alert
+          command: pcs alert recipient add alert_file id=my-alert_logfile value=/var/log/pcmk_alert_file.log meta timestamp-format="%d-%b-%Y %H:%M:%S"
+    - name: Verify alert configuration
+      command: pcs alert show
+      register: alert_show
+      failed_when: "'alert_file' not in alert_show.stdout"
