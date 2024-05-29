@@ -1,0 +1,8 @@
+{
+    "ansible.ansible.path": "/opt/homebrew/bin/ansible",
+    "ansible.ansibleNavigator.path": "/opt/homebrew/bin/ansible-navigator",
+    "ansible.validation.lint.path": "/opt/homebrew/bin/ansible-lint",
+    "ansible.lightspeed.enabled": false,
+    "ansible.lightspeed.disableContentSuggestionHeader": true,
+    "ansible.python.interpreterPath": "/opt/homebrew/bin/python3"
+}

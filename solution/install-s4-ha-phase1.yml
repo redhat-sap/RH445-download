@@ -16,7 +16,7 @@
     ip_cidr_prefix: 24
   tasks:
     - name: Add ASCS service ip temporary
-      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ascs_ip_address }}/{{ ip_cidr_prefix }} brd + dev {{ sap_ha_pacemaker_cluster_vip_client_interface }}'
+      command: "ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ascs_ip_address }}/{{ ip_cidr_prefix }} brd + dev {{ sap_ha_pacemaker_cluster_vip_client_interface }}"
       register: __ipstate
       changed_when: __ipstate.rc == 0
       failed_when: __ipstate.rc != 0 and __ipstate.rc != 2
@@ -26,8 +26,8 @@
         path: "/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }}"
         state: directory
         owner: "{{ sap_swpm_sidadm_uid | d('root') }}"
-        group: "{{ sap_swpm_sapsys_gid | d('root') }}" 
-        mode: '0775'
+        group: "{{ sap_swpm_sapsys_gid | d('root') }}"
+        mode: "0775"
 
     - name: Mount ASCS filesystem via nfs
       ansible.posix.mount:
@@ -35,12 +35,12 @@
         src: "{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }}"
         fstype: nfs
         state: mounted
-     
+
     - name: Remove fstab entry for ASCS mount
       ansible.builtin.lineinfile:
         path: /etc/fstab
         state: absent
-        regexp: '^{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }} .*$'
+        regexp: "^{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ASCS{{ sap_swpm_ascs_instance_nr }} .*$"
 
 - name: Add temporary IP to ERS and mount directories
   hosts: s4ers
@@ -52,19 +52,18 @@
 
   tasks:
     - name: Add ERS service ip temporary
-      command: 'ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ers_ip_address }}/{{ ip_cidr_prefix }} brd + dev {{ sap_ha_pacemaker_cluster_vip_client_interface }}'
+      command: "ip address add {{ sap_ha_pacemaker_cluster_vip_nwas_abap_ers_ip_address }}/{{ ip_cidr_prefix }} brd + dev {{ sap_ha_pacemaker_cluster_vip_client_interface }}"
       register: __ipstate
       changed_when: __ipstate.rc == 0
       failed_when: __ipstate.rc != 0 and __ipstate.rc != 2
-
 
     - name: Ensure ERS directory exists
       ansible.builtin.file:
         path: "/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }}"
         state: directory
         owner: "{{ sap_swpm_sidadm_uid | d('root') }}"
-        group: "{{ sap_swpm_sapsys_gid | d('root') }}" 
-        mode: '0775'
+        group: "{{ sap_swpm_sapsys_gid | d('root') }}"
+        mode: "0775"
 
     - name: Mount ERS filesystem via nfs
       ansible.posix.mount:
@@ -77,7 +76,7 @@
       ansible.builtin.lineinfile:
         path: /etc/fstab
         state: absent
-        regexp: '^{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }} .*$'
+        regexp: "^{{ sap_nwas_shared_mount }}/usr/sap/{{ sap_swpm_sid }}/ERS{{ sap_swpm_ers_instance_nr }} .*$"
 
 #### VM storage filesystem setup ####
 - name: Hosts shared storage setup
@@ -97,9 +96,9 @@
         path: "{{ item }}"
         state: directory
         owner: "{{ sap_swpm_sidadm_uid | d('root') }}"
-        group: "{{ sap_swpm_sapsys_gid | d('root') }}" 
-        mode: '0775'
-      loop: "{{ shared_paths |flatten(levels=1) }}"
+        group: "{{ sap_swpm_sapsys_gid | d('root') }}"
+        mode: "0775"
+      loop: "{{ shared_paths | flatten(levels=1) }}"
 
     - name: Ensure filesystems for shared paths are mounted
       # Content suggestion provided by Ansible Lightspeed
@@ -115,4 +114,3 @@
         name:
           - rsync
         state: present
-
