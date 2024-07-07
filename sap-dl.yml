@@ -18,7 +18,34 @@ s4fndn2021:
   - SAPEXE_200-80005374.SAR
   # SAPEXEDB_100-80005373.SAR
   - SAPEXEDB_200-80005373.SAR
-  - SAPHOSTAGENT58_58-80004822.SAR
+  - 
+ERROR. More than 1 result, manual intervention required....
+Identified SAPHOSTAGENT52_52-80004822.SAR : SAP HOST AGENT 7.22 SP52, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT53_53-80004822.SAR : SAP HOST AGENT 7.22 SP53, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT54_54-80004822.SAR : SAP HOST AGENT 7.22 SP54, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT55_55-80004822.SAR : SAP HOST AGENT 7.22 SP55, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT56_56-80004822.SAR : SAP HOST AGENT 7.22 SP56, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT57_57-80004822.SAR : SAP HOST AGENT 7.22 SP57, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT58_58-80004822.SAR : SAP HOST AGENT 7.22 SP58, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT59_59-80004822.SAR : SAP HOST AGENT 7.22 SP59, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT60_60-80004822.SAR : SAP HOST AGENT 7.22 SP60, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT61_61-80004822.SAR : SAP HOST AGENT 7.22 SP61, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT62_62-80004822.SAR : SAP HOST AGENT 7.22 SP62, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT63_63-80004822.SAR : SAP HOST AGENT 7.22 SP63, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified SAPHOSTAGENT64_64-80004822.SAR : SAP HOST AGENT 7.22 SP64, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_52-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_53-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_54-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_55-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_56-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_57-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_58-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_59-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_60-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_61-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_62-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_63-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
+Identified saphostagentrpm_64-80004822.rpm : SAPHostAgent RPM Package, Support Package SAP HOST AGENT 7.22 Linux on x86_64 64bit
 s4fndn2022: []
 swpm:
   - SUM20SP20_3-80002456.SAR
