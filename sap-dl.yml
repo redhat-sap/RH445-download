@@ -13,13 +13,7 @@ s4fndn2021:
   - S4FND106_NW_LANG_DE.SAR
   - S4FND106_NW_LANG_EN.SAR
   - igsexe_1-70005417.sar
-  - 
-ERROR. More than 1 result, manual intervention required....
-Identified igshelper_0-10010245.sar : SAP IGS Fonts and Textures, Support Package SAP IGS HELPER # OS independent
-Identified igshelper_15-10010245.sar : SAP IGS Fonts and Textures, Support Package SAP IGS HELPER # OS independent
-Identified igshelper_17-10010245.sar : SAP IGS Fonts and Textures, Support Package SAP IGS HELPER # OS independent
-Identified igshelper_3-10010245.sar : SAP IGS Fonts and Textures, Support Package SAP IGS HELPER # OS independent
-Identified igshelper_4-10010245.sar : SAP IGS Fonts and Textures, Support Package SAP IGS HELPER # OS independent
+  - igshelper_17-10010245.sar
   # SAPEXE_100-80005374.SAR
   - SAPEXE_200-80005374.SAR
   # SAPEXEDB_100-80005373.SAR
