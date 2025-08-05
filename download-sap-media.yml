@@ -74,7 +74,7 @@
         sap_software_download_ignore_file_not_found: true
         sap_software_download_files: "{{ s4fndn2021 + swpm }}"
 
-    - name: Link SAPCAR
+    - name: Link SAPCAR # noqa risky-file-permissions
       ansible.builtin.file:
         src: '{{ sap_swpm_software_path }}/{{ sapcar | first }}'
         dest: '{{ item }}'
