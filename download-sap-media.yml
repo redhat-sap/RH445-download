@@ -51,6 +51,7 @@
         # dry_run: "{{ dryrun | default(false) }}"
         sap_software_download_ignore_file_not_found: true
         sap_software_download_files: "{{ sapcar }}"
+        sap_software_download_deduplicate: last
 
     - name: Download Hana Media
       ansible.builtin.include_role:
@@ -62,6 +63,7 @@
         # dry_run: "{{ dryrun | default(false) }}"
         sap_software_download_ignore_file_not_found: true
         sap_software_download_files: "{{ hdb2sps06 }}"
+        sap_software_download_deduplicate: last
 
     - name: Download S4 Media
       ansible.builtin.include_role:
@@ -73,6 +75,7 @@
         # dry_run: "{{ dryrun | default(false) }}"
         sap_software_download_ignore_file_not_found: true
         sap_software_download_files: "{{ s4fndn2021 + swpm }}"
+        sap_software_download_deduplicate: last
 
     - name: Link SAPCAR # noqa risky-file-permissions
       ansible.builtin.file:

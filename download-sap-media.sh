@@ -28,8 +28,6 @@ Here are the current versions of the files you need to provide:
 On server utility in directory /export/sap-software/HANA2SPS06:
 EOT
 
-# Workaround for ansible
-scp /etc/yum.repos.d/rheldvd.repo root@utility:/etc/yum.repos.d/rheldvd.repo
 
 ## Parse current sap-dl.yml
 ansible -e @sap-dl.yml -m debug -a "msg='{{ hdb2sps06 + sapcar}}'" localhost  | egrep -v 'SUCCESS|msg|\]|\}'
@@ -44,6 +42,9 @@ echo ""
 echo "Press Ctrl-C to stop downloading with S-User and provide the software on your own"
 echo "or enter your SAP credentials with download permissions"
 echo ""
+# Workaround for ansible 2.12
+scp /etc/yum.repos.d/rheldvd.repo root@utility:/etc/yum.repos.d/rheldvd.repo
+
 ansible-galaxy collection install -r ./collections/requirements.yml 2>&1 > /dev/null
 ansible-playbook -v -i utility, \
                  -u devops \
