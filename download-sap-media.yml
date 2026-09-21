@@ -59,7 +59,7 @@
       vars:
         sap_software_download_suser_id: "{{ suser_id }}"
         sap_software_download_suser_password: "{{ suser_password }}"
-        sap_software_download_directory: "{{ sap_swpm_software_path }}"
+        sap_software_download_directory: "{{ sap_swpm_software_path }}/HANA2SPS06"
         # dry_run: "{{ dryrun | default(false) }}"
         sap_software_download_ignore_file_not_found: true
         sap_software_download_files: "{{ hdb2sps06 }}"
@@ -71,7 +71,7 @@
       vars:
         sap_software_download_suser_id: "{{ suser_id }}"
         sap_software_download_suser_password: "{{ suser_password }}"
-        sap_software_download_directory: "{{ sap_swpm_software_path }}"
+        sap_software_download_directory: "{{ sap_swpm_software_path }}/S4HANA2021.FNDN"
         # dry_run: "{{ dryrun | default(false) }}"
         sap_software_download_ignore_file_not_found: true
         sap_software_download_files: "{{ s4fndn2021 + swpm }}"
