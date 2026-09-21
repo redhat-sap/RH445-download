@@ -1,4 +1,4 @@
 ---
 collections:
-  - name: https://github.com/sap-linuxlab/community.sap_launchpad.git
-    type: git
+  - name: community.sap_launchpad
+    version: 1.3.2
