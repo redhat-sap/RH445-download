@@ -28,6 +28,9 @@ Here are the current versions of the files you need to provide:
 On server utility in directory /export/sap-software/HANA2SPS06:
 EOT
 
+# Workaround for ansible
+scp /etc/yum.repos.d/rheldvd.repo root@utility:/etc/yum.repos.d/rheldvd.repo
+
 ## Parse current sap-dl.yml
 ansible -e @sap-dl.yml -m debug -a "msg='{{ hdb2sps06 + sapcar}}'" localhost  | egrep -v 'SUCCESS|msg|\]|\}'
 
